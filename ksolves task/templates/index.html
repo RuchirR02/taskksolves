@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+    <h1>Welcome to the Event Management System</h1>
+    <p>Please <a href="{{ url_for('register') }}">register</a> or <a href="{{ url_for('login') }}">log in</a> to continue.</p>
+    <p>Browse upcoming <a href="{{ url_for('list_events') }}">events</a>.</p>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Events{% endblock %}
+
+{% block content %}
+    <h1>Upcoming Events</h1>
+    {% if events %}
+        <ul>
+            {% for event in events %}
+                <li>
+                    <h2><a href="{{ url_for('event_detail', event_id=event._id) }}">{{ event.name }}</a></h2>
+                    <p>{{ event.description }}</p>
+                   
+                    <p><strong>Location:</strong> {{ event.location }}</p>
+                    {% if session.get('role') == 'user' %}
+                        <form action="{{ url_for('rsvp', event_id=event._id) }}" method="POST">
+                            <button type="submit">RSVP</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No events available at the moment.</p>
+    {% endif %}
+{% endblock %}

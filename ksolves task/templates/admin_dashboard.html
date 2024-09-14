@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Admin Dashboard</h1>
+
+    <h2>Manage Events</h2>
+    <p><a class="create-event-btn" href="{{ url_for('create_event') }}">Create New Event</a></p>
+
+    <h3>All Events</h3>
+    {% if events %}
+        <ul>
+            {% for event in events %}
+                <li>
+                    <h4>{{ event.name }}</h4>
+                    <p>{{ event.description }}</p>
+                  
+                    <p><strong>Location:</strong> {{ event.location }}</p>
+
+                    <!-- Manage Event Actions -->
+                    <p>
+                        <a href="{{ url_for('event_detail', event_id=event._id) }}">View Details</a> |
+                        <a href="{{ url_for('edit_event', event_id=event._id) }}">Edit</a> |
+                        <form action="{{ url_for('delete_event', event_id=event._id) }}" method="POST" style="display:inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </p>
+
+                    <!-- View Attendees and Send Notifications -->
+                    <h5>Attendees:</h5>
+                    {% if event.attendees %}
+                        <ul>
+                            {% for attendee in event.attendees %}
+                                <li>{{ attendee.name }} ({{ attendee.email }})</li>
+                            {% endfor %}
+                        </ul>
+                        <form action="{{ url_for('send_reminder', event_id=event._id) }}" method="POST">
+                            <button type="submit">Send Reminder to All Attendees</button>
+                        </form>
+                    {% else %}
+                        <p>No attendees registered yet.</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No events available. <a href="{{ url_for('create_event') }}">Create a new event</a>.</p>
+    {% endif %}
+{% endblock %}

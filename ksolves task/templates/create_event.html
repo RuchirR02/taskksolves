@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Event{% endblock %}
+
+{% block content %}
+    <h1>Create Event</h1>
+    <form action="{{ url_for('create_event') }}" method="POST">
+        <label for="name">Event Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea><br>
+
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required><br>
+
+        <button type="submit">Create Event</button>
+    </form>
+{% endblock %}

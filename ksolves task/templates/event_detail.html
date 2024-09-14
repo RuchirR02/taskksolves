@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Event Details{% endblock %}
+
+{% block content %}
+    <h1>{{ event.name }}</h1>
+    <p>{{ event.description }}</p>
+
+    <p><strong>Location:</strong> {{ event.location }}</p>
+
+    {% if session.get('role') == 'admin' %}
+        <h2>Attendees</h2>
+        <ul>
+            {% for attendee in event.attendees %}
+                <li>{{ attendee.name }} ({{ attendee.email }})</li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('send_reminder', event_id=event._id) }}" method="POST">
+            <button type="submit">Send Reminder</button>
+        </form>
+    {% endif %}
+{% endblock %}
